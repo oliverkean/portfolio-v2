@@ -1,26 +1,80 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --app-bg: #f7f5ef;
+  --app-surface: #ffffff;
+  --app-panel: #ffffff;
+  --app-field: #f1eee6;
+  --app-text: #161616;
+  --app-muted: #69665f;
+  --app-border: #ded8cc;
+  --app-accent: #7c4dff;
+  --app-accent-strong: #5f35d7;
+  --app-accent-soft: #e7ddff;
+  --app-accent-contrast: #ffffff;
+  --app-success: #258967;
+  --app-warning: #a66b14;
+  --background: var(--app-bg);
+  --foreground: var(--app-text);
+}
+
+.dark {
+  --app-bg: #08090b;
+  --app-surface: #0d0e11;
+  --app-panel: #121316;
+  --app-field: #18191d;
+  --app-text: #f4f1ea;
+  --app-muted: #9c9a93;
+  --app-border: #2b2b30;
+  --app-accent: #8b5cf6;
+  --app-accent-strong: #a78bfa;
+  --app-accent-soft: #282238;
+  --app-accent-contrast: #f8f5ff;
+  --app-success: #81c784;
+  --app-warning: #d8b26e;
+  --background: var(--app-bg);
+  --foreground: var(--app-text);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-app-bg: var(--app-bg);
+  --color-app-surface: var(--app-surface);
+  --color-app-panel: var(--app-panel);
+  --color-app-field: var(--app-field);
+  --color-app-text: var(--app-text);
+  --color-app-muted: var(--app-muted);
+  --color-app-border: var(--app-border);
+  --color-app-accent: var(--app-accent);
+  --color-app-accent-strong: var(--app-accent-strong);
+  --color-app-accent-soft: var(--app-accent-soft);
+  --color-app-accent-contrast: var(--app-accent-contrast);
+  --color-app-success: var(--app-success);
+  --color-app-warning: var(--app-warning);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-roboto-mono);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+::selection {
+  background: var(--app-accent);
+  color: var(--app-accent-contrast);
+}
+
+a,
+button {
+  text-underline-offset: 4px;
 }
