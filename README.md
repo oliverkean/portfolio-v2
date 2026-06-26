@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio Management System
 
-## Getting Started
+Next.js, TypeScript, PostgreSQL, Prisma, and Tailwind CSS.
 
-First, run the development server:
+## Local setup
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+1. Copy the environment template and set your login details:
+
+   ```powershell
+   Copy-Item .env.example .env
+   ```
+
+   Set `OWNER_EMAIL`, `OWNER_PASSWORD`, and `OWNER_NAME` in `.env`. The seeded account can access `/login` and `/studio`.
+
+2. Start PostgreSQL with Docker Desktop running:
+
+   ```powershell
+   docker compose up -d
+   ```
+
+3. Generate the Prisma client, apply migrations, and seed the portfolio:
+
+   ```powershell
+   npm run prisma:generate
+   npm run prisma:migrate -- --name initial_schema
+   npm run prisma:seed
+   ```
+
+4. Start the application:
+
+   ```powershell
+   npm run dev
+   ```
+
+Open `http://localhost:3000/login`, then use the credentials from `.env`.
+
+## Database workflow
+
+- Schema: `prisma/schema.prisma`
+- Migrations: `prisma/migrations/`
+- Seed: `prisma/seed.ts`
+- Client: `src/lib/prisma.ts`
+
+During development, change the Prisma schema, then create a named migration:
+
+```powershell
+npm run prisma:migrate -- --name describe_your_change
+npm run prisma:generate
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+For a production database, set `DATABASE_URL` and the owner variables in the deployment provider's secret manager. Apply committed migrations with:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```powershell
+npm run prisma:deploy
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Do not commit `.env` or use the local owner password in production.
 
-## Learn More
+## Deployment preflight
 
-To learn more about Next.js, take a look at the following resources:
+The production build runs `prisma generate` before `next build`. This is required because the generated Prisma client is intentionally excluded from Git.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Deploy only after these steps:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Provision a managed PostgreSQL database and set its connection string as `DATABASE_URL` in the hosting provider.
+2. Set unique production values for `OWNER_EMAIL`, `OWNER_PASSWORD`, and `OWNER_NAME` in the provider's secret manager.
+3. Apply the committed migrations once with `npm run prisma:deploy`.
+4. Seed the initial owner and portfolio once with `npm run prisma:seed`.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The current upload implementation writes to the local filesystem. It is suitable for Docker-based development, but it must be replaced with object storage such as Amazon S3 before using project or resume uploads in a serverless deployment.
