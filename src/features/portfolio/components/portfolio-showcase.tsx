@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Image from "next/image";
 import type { ReactNode } from "react";
 import {
@@ -230,11 +229,8 @@ export function PortfolioShowcase({ portfolio }: { portfolio: PortfolioInput }) 
   return (
     <main className="min-h-screen bg-app-bg text-app-text">
       <header className="sticky top-0 z-10 border-b border-app-border bg-app-bg/90 backdrop-blur">
-        <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-          <Link href="/" className="inline-flex items-center gap-2 text-sm font-semibold text-app-text">
-            <Image src="/icon.png" alt="" width={28} height={28} className="h-7 w-7 rounded-md" priority />
-            <span>{portfolio.name}</span>
-          </Link>
+        <nav className="mx-auto flex h-16 max-w-6xl items-center justify-end px-6 md:grid md:grid-cols-[1fr_auto_1fr]">
+          <div aria-hidden="true" className="hidden md:block" />
           <div className="hidden items-center gap-6 text-sm font-medium text-app-muted md:flex">
             <a href="#projects" className="hover:text-app-text">
               Projects
@@ -249,7 +245,7 @@ export function PortfolioShowcase({ portfolio }: { portfolio: PortfolioInput }) 
               Contact
             </a>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 md:justify-self-end">
             <ThemeToggle />
             {portfolio.resumeUrl ? (
               <a
