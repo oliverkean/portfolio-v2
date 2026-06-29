@@ -1,4 +1,3 @@
-import Image from "next/image";
 import type { ReactNode } from "react";
 import {
   ArrowUpRight,
@@ -17,7 +16,6 @@ import {
   Layers,
   Layout,
   Mail,
-  MapPin,
   Network,
   Palette,
   Phone,
@@ -260,7 +258,7 @@ export function PortfolioShowcase({ portfolio }: { portfolio: PortfolioInput }) 
         </nav>
       </header>
 
-      <section className="mx-auto grid max-w-6xl gap-12 px-6 py-16 lg:grid-cols-[1fr_330px] lg:items-end lg:py-24">
+      <section className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
         <div>
           <h1 className="max-w-3xl text-5xl font-semibold tracking-normal text-app-text sm:text-7xl">{portfolio.name}</h1>
           <p className="mt-5 font-mono text-sm uppercase tracking-[0.18em] text-app-muted">{portfolio.title}</p>
@@ -282,30 +280,6 @@ export function PortfolioShowcase({ portfolio }: { portfolio: PortfolioInput }) 
             ) : null}
           </div>
         </div>
-
-        <aside className="border border-app-border bg-app-panel p-5">
-          <div className="flex items-center justify-between border-b border-app-border pb-5">
-            <Image src="/icon.png" alt="" width={56} height={56} className="h-14 w-14 rounded-xl" priority />
-            <span className="font-mono text-xs uppercase tracking-[0.18em] text-app-muted">Software engineer</span>
-          </div>
-          <div className="space-y-4 py-6 text-sm text-app-muted">
-            {portfolio.location ? (
-              <span className="flex items-center gap-2">
-                <MapPin size={16} />
-                {portfolio.location}
-              </span>
-            ) : null}
-            <span className="flex items-center gap-2">
-              <Code2 size={16} />
-              Product interfaces, APIs, and integrations
-            </span>
-          </div>
-          <div className="border-t border-app-border pt-5">
-            <p className="text-sm leading-6 text-app-muted">
-              Currently building full-stack education technology workflows at LogoLife.
-            </p>
-          </div>
-        </aside>
       </section>
 
       <section id="projects" className="border-y border-app-border bg-app-surface">
