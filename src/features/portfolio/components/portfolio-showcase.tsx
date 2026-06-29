@@ -168,11 +168,6 @@ function FlagshipProject({ project }: { project: ProjectInput }) {
               </div>
             ))}
           </div>
-          <div className="mt-8 grid grid-cols-3 gap-2">
-            <span className="h-16 border border-app-border bg-app-panel" />
-            <span className="h-16 border border-app-border bg-app-panel" />
-            <span className="h-16 bg-app-accent" />
-          </div>
         </div>
       </div>
     </article>
