@@ -16,20 +16,6 @@ export const starterPortfolio: PortfolioInput = {
   isPublished: true,
   projects: [
     {
-      title: "AcceptedX Product Workflows",
-      summary: "Full-stack product features for a college counseling platform used by students, parents, counselors, and internal teams.",
-      description:
-        "Built meeting tools, proposal tracking, Parent View access, planning notifications, survey flows, application tracking, resume tools, institution access, and internal workflows. The work supported 262 meeting proposals, 824 parent accounts, and 2,372 student planning reminders.",
-      role: "Software Engineer",
-      stack: ["React", "TypeScript", "Tailwind CSS", "Node.js", "Express.js", "NestJS", "MongoDB", "Redis", "S3"],
-      liveUrl: "",
-      repoUrl: "",
-      imageUrl: "",
-      featured: true,
-      status: "Professional work",
-      sortOrder: 0,
-    },
-    {
       title: "Traffic Monitoring System",
       summary: "A real-time traffic monitoring web application that surfaces road conditions and helps users choose alternative routes.",
       description:
@@ -41,7 +27,7 @@ export const starterPortfolio: PortfolioInput = {
       imageUrl: "",
       featured: true,
       status: "Internship project",
-      sortOrder: 1,
+      sortOrder: 0,
     },
     {
       title: "Swapii Bartering Platform",
@@ -53,9 +39,9 @@ export const starterPortfolio: PortfolioInput = {
       liveUrl: "",
       repoUrl: "",
       imageUrl: "",
-      featured: false,
+      featured: true,
       status: "Project",
-      sortOrder: 2,
+      sortOrder: 1,
     },
   ],
   experiences: [

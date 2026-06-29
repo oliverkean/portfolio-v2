@@ -27,8 +27,8 @@ describe("portfolio utils", () => {
     });
 
     expect(portfolio.projects.map((project) => project.title)).toEqual([
-      "AcceptedX Product Workflows",
       "Traffic Monitoring System",
+      "Swapii Bartering Platform",
     ]);
     expect(portfolio.projects.map((project) => project.sortOrder)).toEqual([0, 1]);
   });
