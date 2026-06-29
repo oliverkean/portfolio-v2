@@ -91,12 +91,17 @@ export async function getPortfolioBySlug(slug: string) {
     return fallbackPortfolio.slug === slug ? fallbackPortfolio : null;
   }
 
-  const record = await prisma.portfolio.findUnique({
-    where: { slug },
-    include: portfolioInclude,
-  });
+  try {
+    const record = await prisma.portfolio.findUnique({
+      where: { slug },
+      include: portfolioInclude,
+    });
 
-  return record ? toPortfolioInput(record) : null;
+    return record ? toPortfolioInput(record) : null;
+  } catch (error) {
+    console.error("Unable to read portfolio from database.", error);
+    return fallbackPortfolio.slug === slug ? fallbackPortfolio : null;
+  }
 }
 
 export async function savePortfolio(currentSlug: string, payload: unknown, ownerId?: string) {
