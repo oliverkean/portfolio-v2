@@ -36,7 +36,13 @@ describe("portfolio utils", () => {
   it("groups skills by category after ordering", () => {
     const groups = groupSkills(starterPortfolio.skills);
 
-    expect([...groups.keys()]).toEqual(["Frontend", "Backend/APIs", "Databases", "Tools"]);
+    expect([...groups.keys()]).toEqual([
+      "Frontend",
+      "Backend/APIs",
+      "Databases",
+      "Integrations/Services",
+      "Deployment/Tools",
+    ]);
     expect(groups.get("Backend/APIs")?.map((skill) => skill.name)).toEqual([
       "Node.js",
       "Express.js",
@@ -46,6 +52,14 @@ describe("portfolio utils", () => {
       "Webhooks",
       "API Integration",
     ]);
-    expect(groups.get("Tools")?.length).toBeGreaterThan(10);
+    expect(groups.get("Integrations/Services")?.map((skill) => skill.name)).toEqual([
+      "HubSpot CRM/API",
+      "Stripe",
+      "OpenAI API",
+      "Mailgun",
+      "Mapbox",
+      "S3",
+    ]);
+    expect(groups.get("Deployment/Tools")?.length).toBeGreaterThan(10);
   });
 });
