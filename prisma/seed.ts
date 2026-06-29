@@ -1,9 +1,10 @@
 import "dotenv/config";
-import bcrypt from "bcryptjs";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma/client";
+import { resolvePasswordHash } from "../src/features/auth/password-hash";
 import { starterPortfolio } from "../src/features/portfolio/portfolio.sample";
 import { normalizePortfolio } from "../src/features/portfolio/portfolio.utils";
+import type { PortfolioInput } from "../src/features/portfolio/portfolio.schema";
 
 const prisma = new PrismaClient({
   adapter: new PrismaPg({
@@ -11,20 +12,63 @@ const prisma = new PrismaClient({
   }),
 });
 
+function projectRows(portfolio: PortfolioInput) {
+  return portfolio.projects.map((project) => ({
+    title: project.title,
+    summary: project.summary,
+    description: project.description || null,
+    role: project.role || null,
+    stack: project.stack,
+    liveUrl: project.liveUrl || null,
+    repoUrl: project.repoUrl || null,
+    imageUrl: project.imageUrl || null,
+    featured: project.featured,
+    status: project.status,
+    sortOrder: project.sortOrder,
+  }));
+}
+
+function experienceRows(portfolio: PortfolioInput) {
+  return portfolio.experiences.map((experience) => ({
+    company: experience.company,
+    role: experience.role,
+    location: experience.location || null,
+    startDate: experience.startDate,
+    endDate: experience.endDate || null,
+    description: experience.description,
+    sortOrder: experience.sortOrder,
+  }));
+}
+
+function skillRows(portfolio: PortfolioInput) {
+  return portfolio.skills.map((skill) => ({
+    name: skill.name,
+    category: skill.category,
+    level: skill.level,
+    sortOrder: skill.sortOrder,
+  }));
+}
+
 async function main() {
   const portfolio = normalizePortfolio(starterPortfolio);
   const email = (process.env.OWNER_EMAIL || "owner@example.com").toLowerCase();
   const password = process.env.OWNER_PASSWORD || "ChangeMe123!";
+  const passwordHash = await resolvePasswordHash({
+    password,
+    passwordHash: process.env.OWNER_PASSWORD_HASH,
+  });
+  const shouldUpdatePassword = Boolean(process.env.OWNER_PASSWORD || process.env.OWNER_PASSWORD_HASH);
   const name = process.env.OWNER_NAME || portfolio.name;
   const user = await prisma.user.upsert({
     where: { email },
     create: {
       email,
       name,
-      passwordHash: await bcrypt.hash(password, 12),
+      passwordHash,
     },
     update: {
       name,
+      ...(shouldUpdatePassword ? { passwordHash } : {}),
     },
   });
 
@@ -45,9 +89,9 @@ async function main() {
       resumeUrl: portfolio.resumeUrl || null,
       heroImageUrl: portfolio.heroImageUrl || null,
       isPublished: portfolio.isPublished,
-      projects: { create: portfolio.projects },
-      experiences: { create: portfolio.experiences },
-      skills: { create: portfolio.skills },
+      projects: { create: projectRows(portfolio) },
+      experiences: { create: experienceRows(portfolio) },
+      skills: { create: skillRows(portfolio) },
     },
     update: {
       ownerId: user.id,
@@ -63,6 +107,18 @@ async function main() {
       resumeUrl: portfolio.resumeUrl || null,
       heroImageUrl: portfolio.heroImageUrl || null,
       isPublished: portfolio.isPublished,
+      projects: {
+        deleteMany: {},
+        create: projectRows(portfolio),
+      },
+      experiences: {
+        deleteMany: {},
+        create: experienceRows(portfolio),
+      },
+      skills: {
+        deleteMany: {},
+        create: skillRows(portfolio),
+      },
     },
   });
 }

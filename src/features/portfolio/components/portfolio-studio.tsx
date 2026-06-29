@@ -137,7 +137,7 @@ function StudioPreview({ portfolio }: { portfolio: PortfolioInput }) {
       <div className="flex items-center justify-between">
         <p className="font-mono text-xs uppercase tracking-[0.18em] text-app-muted">Live preview</p>
         <Link
-          href={`/p/${portfolio.slug}`}
+          href="/"
           className="inline-flex items-center gap-1 text-sm font-semibold text-app-accent hover:text-app-accent-strong"
         >
           Open <ArrowUpRight size={15} />
@@ -181,7 +181,7 @@ export function PortfolioStudio({
   const [saveState, setSaveState] = useState<SaveState>("idle");
   const [saveError, setSaveError] = useState("");
 
-  const publicUrl = useMemo(() => `/p/${portfolio.slug}`, [portfolio.slug]);
+  const publicUrl = useMemo(() => "/", []);
 
   function updatePortfolio<K extends keyof PortfolioInput>(key: K, value: PortfolioInput[K]) {
     setPortfolio((current) => ({ ...current, [key]: value }));

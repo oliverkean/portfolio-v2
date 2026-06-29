@@ -26,7 +26,10 @@ describe("portfolio utils", () => {
       ],
     });
 
-    expect(portfolio.projects.map((project) => project.title)).toEqual(["ShipFast", "Pulse Analytics"]);
+    expect(portfolio.projects.map((project) => project.title)).toEqual([
+      "AcceptedX Product Workflows",
+      "Traffic Monitoring System",
+    ]);
     expect(portfolio.projects.map((project) => project.sortOrder)).toEqual([0, 1]);
   });
 

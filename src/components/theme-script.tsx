@@ -1,3 +1,5 @@
+import Script from "next/script";
+
 export function ThemeScript() {
   const source = `
     (function () {
@@ -11,5 +13,5 @@ export function ThemeScript() {
     })();
   `;
 
-  return <script dangerouslySetInnerHTML={{ __html: source }} />;
+  return <Script id="portfolio-theme-script" strategy="afterInteractive" dangerouslySetInnerHTML={{ __html: source }} />;
 }

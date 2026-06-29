@@ -14,8 +14,8 @@ const robotoMono = Roboto_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio Studio",
-  description: "Manage and publish a recruiter-ready developer portfolio.",
+  title: "Oliver Palgue | Portfolio",
+  description: "Portfolio of Oliver Palgue.",
 };
 
 export default function RootLayout({

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { ReactNode } from "react";
 import {
   ArrowUpRight,
@@ -20,6 +21,7 @@ import {
   MapPin,
   Network,
   Palette,
+  Phone,
   Send,
   Server,
   Settings,
@@ -229,8 +231,9 @@ export function PortfolioShowcase({ portfolio }: { portfolio: PortfolioInput }) 
     <main className="min-h-screen bg-app-bg text-app-text">
       <header className="sticky top-0 z-10 border-b border-app-border bg-app-bg/90 backdrop-blur">
         <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-          <Link href="/" className="text-sm font-semibold text-app-text">
-            {portfolio.name}
+          <Link href="/" className="inline-flex items-center gap-2 text-sm font-semibold text-app-text">
+            <Image src="/icon.png" alt="" width={28} height={28} className="h-7 w-7 rounded-md" priority />
+            <span>{portfolio.name}</span>
           </Link>
           <div className="hidden items-center gap-6 text-sm font-medium text-app-muted md:flex">
             <a href="#projects" className="hover:text-app-text">
@@ -286,8 +289,8 @@ export function PortfolioShowcase({ portfolio }: { portfolio: PortfolioInput }) 
 
         <aside className="border border-app-border bg-app-panel p-5">
           <div className="flex items-center justify-between border-b border-app-border pb-5">
-            <span className="h-12 w-12 bg-app-accent" />
-            <span className="font-mono text-xs uppercase tracking-[0.18em] text-app-muted">Portfolio</span>
+            <Image src="/icon.png" alt="" width={56} height={56} className="h-14 w-14 rounded-xl" priority />
+            <span className="font-mono text-xs uppercase tracking-[0.18em] text-app-muted">Software engineer</span>
           </div>
           <div className="space-y-4 py-6 text-sm text-app-muted">
             {portfolio.location ? (
@@ -296,24 +299,15 @@ export function PortfolioShowcase({ portfolio }: { portfolio: PortfolioInput }) 
                 {portfolio.location}
               </span>
             ) : null}
-            {portfolio.email ? (
-              <a className="flex items-center gap-2 hover:text-app-text" href={`mailto:${portfolio.email}`}>
-                <Mail size={16} />
-                {portfolio.email}
-              </a>
-            ) : null}
+            <span className="flex items-center gap-2">
+              <Code2 size={16} />
+              Product interfaces, APIs, and integrations
+            </span>
           </div>
-          <div className="grid grid-cols-2 border-t border-app-border pt-5 text-sm font-semibold">
-            {portfolio.githubUrl ? (
-              <a className="flex items-center gap-2 text-app-muted hover:text-app-text" href={portfolio.githubUrl}>
-                <Code2 size={16} /> GitHub
-              </a>
-            ) : null}
-            {portfolio.linkedinUrl ? (
-              <a className="flex items-center gap-2 text-app-muted hover:text-app-text" href={portfolio.linkedinUrl}>
-                <Network size={16} /> LinkedIn
-              </a>
-            ) : null}
+          <div className="border-t border-app-border pt-5">
+            <p className="text-sm leading-6 text-app-muted">
+              Currently building full-stack education technology workflows at LogoLife.
+            </p>
           </div>
         </aside>
       </section>
@@ -389,6 +383,12 @@ export function PortfolioShowcase({ portfolio }: { portfolio: PortfolioInput }) 
                   <Mail size={16} />
                   {portfolio.email}
                 </a>
+              ) : null}
+              {portfolio.phone ? (
+                <span className="flex items-center gap-2">
+                  <Phone size={16} />
+                  {portfolio.phone}
+                </span>
               ) : null}
               {portfolio.linkedinUrl ? (
                 <a className="flex items-center gap-2 hover:text-app-text" href={portfolio.linkedinUrl}>

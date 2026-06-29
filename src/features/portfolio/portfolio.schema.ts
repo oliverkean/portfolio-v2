@@ -3,7 +3,7 @@ import { z } from "zod";
 const optionalUrl = z
   .string()
   .trim()
-  .url("Enter a valid URL.")
+  .refine((value) => value.startsWith("/") || z.url().safeParse(value).success, "Enter a valid URL.")
   .or(z.literal(""))
   .optional();
 
