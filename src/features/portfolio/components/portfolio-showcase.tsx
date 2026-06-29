@@ -205,13 +205,13 @@ function SkillGroup({ category, skills }: { category: string; skills: SkillInput
   const categoryIcon = skillIconMap[category.toLowerCase()] || <Cpu {...iconProps} />;
 
   return (
-    <article className="grid gap-4 border-t border-app-border py-5 first:border-t-0 sm:grid-cols-[190px_1fr]">
+    <article className="grid gap-4 border-t border-app-border py-5 first:border-t-0 md:grid-cols-[minmax(240px,0.32fr)_1fr]">
       <div className="flex items-center gap-3 sm:items-start">
         <span className="flex h-9 w-9 shrink-0 items-center justify-center bg-app-accent text-app-accent-contrast">
           {categoryIcon}
         </span>
-        <div>
-          <h3 className="text-lg font-semibold text-app-text">{category}</h3>
+        <div className="min-w-0">
+          <h3 className="text-lg font-semibold leading-snug text-app-text">{category}</h3>
         </div>
       </div>
       <ul className="flex flex-wrap gap-2">
